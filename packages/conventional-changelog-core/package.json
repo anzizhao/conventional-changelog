@@ -1,7 +1,7 @@
 {
-  "name": "conventional-changelog-core",
-  "version": "3.1.0",
-  "description": "conventional-changelog core",
+  "name": "@ali/conventional-changelog-core-extra",
+  "version": "3.1.5",
+  "description": "conventional-changelog core extra",
   "repository": {
     "type": "git",
     "url": "https://github.com/conventional-changelog/conventional-changelog.git"
@@ -50,6 +50,9 @@
     "semver": "^5.5.0",
     "shelljs": "^0.8.0",
     "tmp": "0.0.33"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npm.alibaba-inc.com"
   },
   "scripts": {
     "lint": "eslint --fix .",

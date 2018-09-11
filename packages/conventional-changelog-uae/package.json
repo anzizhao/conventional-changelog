@@ -1,7 +1,7 @@
 {
-  "name": "conventional-changelog-angular",
-  "version": "3.0.7",
-  "description": "conventional-changelog angular preset",
+  "name": "@ali/conventional-changelog-uae",
+  "version": "0.0.1",
+  "description": "conventional-changelog uae preset",
   "main": "index.js",
   "scripts": {
     "lint": "eslint --fix .",
@@ -14,7 +14,7 @@
   },
   "keywords": [
     "conventional-changelog",
-    "angular",
+    "uae",
     "preset"
   ],
   "files": [
@@ -30,12 +30,14 @@
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
+  "publishConfig": {
+    "registry": "http://registry.npm.alibaba-inc.com"
+  },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular#readme",
   "devDependencies": {
     "better-than-before": "^1.0.0",
-    "conventional-changelog-core": "^2.0.11",
+    "@ali/conventional-changelog-core-extra": "^2.0.11",
     "git-dummy-commit": "^1.2.0",
-    "git-semver-tags": "^1.3.6",
     "shelljs": "^0.8.0",
     "through2": "^2.0.0"
   },

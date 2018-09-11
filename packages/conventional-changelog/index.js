@@ -1,6 +1,6 @@
 'use strict'
 
-var conventionalChangelogCore = require('conventional-changelog-core')
+var conventionalChangelogCore = require('@ali/conventional-changelog-core-extra')
 var conventionalChangelogPresetLoader = require('conventional-changelog-preset-loader')
 
 function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts) {

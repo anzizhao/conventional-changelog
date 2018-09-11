@@ -2,7 +2,7 @@
 'use strict'
 
 var addStream = require('add-stream')
-var conventionalChangelog = require('conventional-changelog')
+var conventionalChangelog = require('@ali/conventional-changelog-extra')
 var fs = require('fs')
 var meow = require('meow')
 var tempfile = require('tempfile')
@@ -25,7 +25,7 @@ var cli = meow(`
       -s, --same-file           Outputting to the infile so you don't need to specify the same file as outfile
 
       -p, --preset              Name of the preset you want to use. Must be one of the following:
-                                angular, atom, codemirror, ember, eslint, express, jquery, jscs or jshint
+                                angular, atom, codemirror, ember, eslint, express, jquery, jscs , jshint, @ali/uae
 
       -k, --pkg                 A filepath of where your package.json is located
                                 Default is the closest package.json from cwd
