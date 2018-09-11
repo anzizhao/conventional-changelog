@@ -1,5 +1,5 @@
 {
-  "name": "conventional-changelog-cli",
+  "name": "conventional-changelog-extra-cli",
   "version": "2.0.5",
   "description": "Generate a changelog from git metadata",
   "bugs": {
@@ -24,7 +24,7 @@
   "keywords": [
     "cli",
     "cli-app",
-    "conventional-changelog",
+    "conventional-changelog-extra",
     "conventional",
     "changelog",
     "log"
@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "add-stream": "^1.0.0",
-    "conventional-changelog": "^2.0.3",
+    "conventional-changelog-extra": "^2.0.3",
     "lodash": "^4.2.1",
     "meow": "^4.0.0",
     "tempfile": "^1.1.1"

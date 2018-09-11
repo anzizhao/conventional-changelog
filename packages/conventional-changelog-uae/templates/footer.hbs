@@ -1,0 +1,15 @@
+{{#if noteGroups}}
+{{#each noteGroups}}
+
+### {{title}}
+
+{{#each notes}}
+* {{#if commit.scope}}**{{commit.scope}}:** {{/if}}{{text}}
+{{/each}}
+{{/each}}
+
+{{/if}}
+
+{{#if onlineInfoHistory~}}
+  # UAE上线，时间：{{onlineInfoHistory.date}}, 版本: {{onlineInfoHistory.version}}, 操作人:{{onlineInfoHistory.operator}}
+{{~/if}}

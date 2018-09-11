@@ -254,63 +254,66 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
       }
 
       writerOpts = _.assign({
-        finalizeContext: function (context, writerOpts, filteredCommits, keyCommit, originalCommits) {
-          var firstCommit = originalCommits[0]
-          var lastCommit = originalCommits[originalCommits.length - 1]
-          var firstCommitHash = firstCommit ? firstCommit.hash : null
-          var lastCommitHash = lastCommit ? lastCommit.hash : null
-
-          if ((!context.currentTag || !context.previousTag) && keyCommit) {
-            var match = /tag:\s*(.+?)[,)]/gi.exec(keyCommit.gitTags)
-            var currentTag = context.currentTag
-            context.currentTag = currentTag || match ? match[1] : null
-            var index = gitSemverTags.indexOf(context.currentTag)
-
-            // if `keyCommit.gitTags` is not a semver
-            if (index === -1) {
-              context.currentTag = currentTag || null
-            } else {
-              var previousTag = context.previousTag = gitSemverTags[index + 1]
-
-              if (!previousTag) {
-                if (options.append) {
-                  context.previousTag = context.previousTag || firstCommitHash
-                } else {
-                  context.previousTag = context.previousTag || lastCommitHash
-                }
-              }
-            }
-          } else {
-            context.previousTag = context.previousTag || gitSemverTags[0]
-
-            if (context.version === 'Unreleased') {
-              if (options.append) {
-                context.currentTag = context.currentTag || lastCommitHash
-              } else {
-                context.currentTag = context.currentTag || firstCommitHash
-              }
-            } else if (!context.currentTag) {
-              if (options.lernaPackage) {
-                context.currentTag = options.lernaPackage + '@' + context.version
-              } else {
-                context.currentTag = guessNextTag(gitSemverTags[0], context.version)
-              }
-            }
-          }
-
-          if (!_.isBoolean(context.linkCompare) && context.previousTag && context.currentTag) {
-            context.linkCompare = true
-          }
-
-          return context
-        },
         debug: options.debug
       },
       config.writerOpts, {
         reverse: options.append,
         doFlush: options.outputUnreleased
       },
-      writerOpts
+      writerOpts,
+      finalizeContext: function (context, writerOpts, filteredCommits, keyCommit, originalCommits) {
+        var firstCommit = originalCommits[0]
+        var lastCommit = originalCommits[originalCommits.length - 1]
+        var firstCommitHash = firstCommit ? firstCommit.hash : null
+        var lastCommitHash = lastCommit ? lastCommit.hash : null
+
+        if ((!context.currentTag || !context.previousTag) && keyCommit) {
+          var match = /tag:\s*(.+?)[,)]/gi.exec(keyCommit.gitTags)
+          var currentTag = context.currentTag
+          context.currentTag = currentTag || match ? match[1] : null
+          var index = gitSemverTags.indexOf(context.currentTag)
+
+          // if `keyCommit.gitTags` is not a semver
+          if (index === -1) {
+            context.currentTag = currentTag || null
+          } else {
+            var previousTag = context.previousTag = gitSemverTags[index + 1]
+
+            if (!previousTag) {
+              if (options.append) {
+                context.previousTag = context.previousTag || firstCommitHash
+              } else {
+                context.previousTag = context.previousTag || lastCommitHash
+              }
+            }
+          }
+        } else {
+          context.previousTag = context.previousTag || gitSemverTags[0]
+
+          if (context.version === 'Unreleased') {
+            if (options.append) {
+              context.currentTag = context.currentTag || lastCommitHash
+            } else {
+              context.currentTag = context.currentTag || firstCommitHash
+            }
+          } else if (!context.currentTag) {
+            if (options.lernaPackage) {
+              context.currentTag = options.lernaPackage + '@' + context.version
+            } else {
+              context.currentTag = guessNextTag(gitSemverTags[0], context.version)
+            }
+          }
+        }
+
+        if (!_.isBoolean(context.linkCompare) && context.previousTag && context.currentTag) {
+          context.linkCompare = true
+        }
+        // 如果外面有配置,进行调用再返回
+        if (typeof writerOpts.finalizeContext === 'function') {
+          return writerOpts.finalizeContext(context)
+        }
+        return context
+      },
       )
 
       return {
