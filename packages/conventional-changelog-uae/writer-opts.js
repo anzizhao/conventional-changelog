@@ -33,6 +33,8 @@ function getWriterOpts () {
       })
       if (commit.type === `feat`) {
         commit.type = `Features`
+      } else if (commit.type === `chore`) {
+        commit.type = `Chores`
       } else if (commit.type === `fix`) {
         commit.type = `Bug Fixes`
       } else if (commit.type === `perf`) {
@@ -92,14 +94,14 @@ function getWriterOpts () {
 
       return commit
     },
-    finalizeContext: function (context, writerOpts, filteredCommits, keyCommit, originalCommits) {
+    finalizeContext: function (context, writerOpts, filteredCommits, keyCommit, originalCommits, options) {
       // 生成上线版本
       // commit中带有feat: Online Operation Version
       // version没有，分组的commit group中有feature，且有上线字眼
       // 获取上线信息(上线版本，时间，人)，将
       let version, operator, date;
       for(const item of context.commitGroups) {
-        if (item.title !== 'Features') {
+        if (item.title !== 'Features' && item.title !== 'Chores') {
           continue;
         }
         // console.log('features:', item.commits)
@@ -112,13 +114,17 @@ function getWriterOpts () {
             date = subject.match(/Date: (.*)Operator:/)[1];
             // 删除这个commit
             item.commits.splice(i, 1);
+            if (!item.commits.length) {
+              // 本来只有一条上线记录，现在为空数组，将title删除掉
+              item.title = '';
+            }
             break;
           }
         }
       }
       if (version && operator && date) {
-        // 找到上线字样
-        if (!context.version) {
+        if (options.releaseCount !== 0) {
+          // 非全局替换
           // 新数据
           context.onlineInfo = {
             version,
@@ -126,13 +132,37 @@ function getWriterOpts () {
             date,
           };
         } else {
-          // 历史数据
+          // 历史数据,包含在下一个release里面
           context.onlineInfoHistory = {
             version,
             operator,
             date,
           };
         }
+
+        // if (writerOpts.releaseCount !== 0) {
+        //   // 非全局替换
+        //   delete context.commitGroups;
+        // }
+        // // 找到上线字样
+        // if (!context.version) {
+        //   // 新数据
+        //   context.onlineInfo = {
+        //     version,
+        //     operator,
+        //     date,
+        //   };
+        // } else {
+        //   // 如果是通过全局替换的，不是追加的，才会生成历史记录
+        //   if (writerOpts.releaseCount === 0) {
+        //     // 历史数据
+        //     context.onlineInfoHistory = {
+        //       version,
+        //       operator,
+        //       date,
+        //     };
+        //   }
+        // }
       }
       return context
     },

@@ -1,6 +1,6 @@
 {
   "name": "@ali/conventional-changelog-uae",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "conventional-changelog uae preset",
   "main": "index.js",
   "scripts": {

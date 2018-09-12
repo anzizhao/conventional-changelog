@@ -310,7 +310,7 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
           }
           // 如果外面有配置,进行调用再返回
           if (typeof selfFinalizeContextOp === 'function') {
-            return selfFinalizeContextOp(context)
+            return selfFinalizeContextOp(context, writerOpts, filteredCommits, keyCommit, originalCommits, options)
           }
           return context
         }
