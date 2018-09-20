@@ -1,6 +1,6 @@
 {
   "name": "@ali/conventional-changelog-extra",
-  "version": "2.0.12",
+  "version": "2.0.15",
   "description": "Generate a changelog from git metadata",
   "repository": {
     "type": "git",
@@ -46,7 +46,7 @@
     "conventional-changelog-jscs": "^0.1.0",
     "conventional-changelog-jshint": "^2.0.0",
     "conventional-changelog-preset-loader": "^2.0.1",
-    "@ali/conventional-changelog-uae": "^0.1.0"
+    "@ali/conventional-changelog-uae": "^0.1.2"
   },
   "devDependencies": {
     "shelljs": "^0.8.0",

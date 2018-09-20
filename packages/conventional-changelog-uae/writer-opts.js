@@ -4,6 +4,7 @@ const compareFunc = require(`compare-func`)
 const Q = require(`q`)
 const readFile = Q.denodeify(require(`fs`).readFile)
 const resolve = require(`path`).resolve
+const semverValid = require('semver').valid
 module.exports = Q.all([
   readFile(resolve(__dirname, `./templates/template.hbs`), `utf-8`),
   readFile(resolve(__dirname, `./templates/header.hbs`), `utf-8`),
@@ -23,6 +24,16 @@ module.exports = Q.all([
 
 function getWriterOpts () {
   return {
+    generateOn: function (commit) {
+      const v = semverValid(commit.version);
+      if (v) return v;
+      const subject = commit.subject;
+      if (subject.indexOf('Online Operation Version') !== -1) {
+        // 是上线版本记录
+        return 'onlinemark';
+      }
+      return null;
+    },
     transform: (commit, context) => {
       let discard = true
       const issues = []
