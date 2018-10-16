@@ -3,30 +3,33 @@
 
 {{~/if}}
 
-
-<a name="{{version}}"></a>
-{{#if isPatch~}}
-  ##
+{{#if onlineInfoHistory~}}
 {{~else~}}
-  #
-{{~/if}} {{#if @root.linkCompare~}}
-  [{{version}}](
-  {{~#if @root.repository~}}
-    {{~#if @root.host}}
-      {{~@root.host}}/
-    {{~/if}}
-    {{~#if @root.owner}}
-      {{~@root.owner}}/
-    {{~/if}}
-    {{~@root.repository}}
+  <a name="{{version}}"></a>
+  {{#if isPatch~}}
+    ##
+  {{~else~}}
+    #
+  {{~/if}} {{#if @root.linkCompare~}}
+    [{{version}}](
+    {{~#if @root.repository~}}
+      {{~#if @root.host}}
+        {{~@root.host}}/
+      {{~/if}}
+      {{~#if @root.owner}}
+        {{~@root.owner}}/
+      {{~/if}}
+      {{~@root.repository}}
+    {{~else}}
+      {{~@root.repoUrl}}
+    {{~/if~}}
+    /compare/{{previousTag}}...{{currentTag}})
   {{~else}}
-    {{~@root.repoUrl}}
-  {{~/if~}}
-  /compare/{{previousTag}}...{{currentTag}})
-{{~else}}
-  {{~version}}
-{{~/if}}
-{{~#if title}} "{{title}}"
-{{~/if}}
-{{~#if date}} ({{date}})
+    {{~version}}
+  {{~/if}}
+  {{~#if title}} "{{title}}"
+  {{~/if}}
+  {{~#if date}} ({{date}})
+  {{/if}}
 {{/if}}
+

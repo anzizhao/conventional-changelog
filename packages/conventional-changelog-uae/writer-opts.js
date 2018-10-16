@@ -27,8 +27,8 @@ function getWriterOpts () {
     generateOn: function (commit) {
       const v = semverValid(commit.version);
       if (v) return v;
-      const subject = commit.subject;
-      if (subject.indexOf('Online Operation Version') !== -1) {
+      const subject = commit.subject; 
+      if (subject && subject.indexOf('Online Operation Version') !== -1) {
         // 是上线版本记录
         return 'onlinemark';
       }
@@ -118,7 +118,7 @@ function getWriterOpts () {
         // console.log('features:', item.commits)
         for(let i=0; i<item.commits.length; i++) {
           const subject = item.commits[i].subject;
-          if (subject.indexOf('Online Operation Version') !== -1) {
+          if (subject && subject.indexOf('Online Operation Version') !== -1) {
             // 找到版本的信息
             version = subject.match(/Version: (.*)Date:/)[1];
             operator = subject.match(/Operator:(.*)/)[1];
